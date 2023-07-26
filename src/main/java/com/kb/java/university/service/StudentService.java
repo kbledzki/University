@@ -37,6 +37,10 @@ public class StudentService {
     public void editStudent (Long id, Student student){
         Student studentToEdit = studentRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Not found student with given id: " + id));
-
+        studentToEdit.setEmail(student.getEmail());
+        studentToEdit.setName(student.getName());
+        studentToEdit.setLastName(student.getLastName());
+        studentToEdit.setGrades(student.getGrades());
+        studentRepository.save(studentToEdit);
     }
 }
