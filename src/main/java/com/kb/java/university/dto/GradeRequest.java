@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode
 public class GradeRequest {
-    private Long id;
     private double gradeValue;
     private Student student;
 }

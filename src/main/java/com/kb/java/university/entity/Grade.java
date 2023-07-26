@@ -1,12 +1,10 @@
 package com.kb.java.university.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,4 +22,5 @@ public class Grade {
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
+
 }
