@@ -16,8 +16,8 @@ public class Student {
     public static final String TABLE_NAME = "student";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "student_id")
+    private Long studentId;
     private String name;
     private String lastName;
     private String email;
