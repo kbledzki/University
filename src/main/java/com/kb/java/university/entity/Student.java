@@ -1,6 +1,5 @@
 package com.kb.java.university.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,7 +18,7 @@ public class Student {
     public static final String TABLE_NAME = "student";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long studentId;
     private String name;
     private String lastName;
     private String email;

@@ -14,14 +14,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeacherResponse {
-    private Long id;
+    private Long teacherId;
     private String name;
     private String lastName;
     private String email;
     private List<Grade> grades = new ArrayList<>();
 
-    public TeacherResponse(Long id, String name, String lastName, String email) {
-        this.id = id;
+    public TeacherResponse(Long teacherId, String name, String lastName, String email) {
+        this.teacherId = teacherId;
         this.name = name;
         this.lastName = lastName;
         this.email = email;

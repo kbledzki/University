@@ -3,7 +3,6 @@ package com.kb.java.university.service;
 import com.kb.java.university.dto.GradeCheckByStudentResponseDto;
 import com.kb.java.university.dto.GradeRequest;
 import com.kb.java.university.dto.GradeResponse;
-import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.entity.Grade;
 import com.kb.java.university.exception.ObjectNotFoundException;
 import com.kb.java.university.repository.GradeRepository;
@@ -28,7 +27,7 @@ public class GradeService {
     public GradeResponse findGrade(Long id) {
         Grade gradeById = getGradeById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Not found grade with given id: " + id));
-        return new GradeResponse(gradeById.getId(), gradeById.getGradeValue(), gradeById.getStudent(), gradeById.getTeacher());
+        return new GradeResponse(gradeById.getGradeId(), gradeById.getGradeValue(), gradeById.getStudent(), gradeById.getTeacher());
     }
 
     public GradeResponse createGrade(GradeRequest gradeRequest, Long studentId, Long teacherId){
@@ -38,7 +37,7 @@ public class GradeService {
                 .teacher(teacherService.getTeacherById(teacherId).orElseThrow(()-> new ObjectNotFoundException("Not found teacher with given id: " + teacherId)))
                 .build();
         gradeRepository.save(grade);
-        return  new GradeResponse(grade.getId(), grade.getGradeValue(), grade.getStudent(), grade.getTeacher());
+        return  new GradeResponse(grade.getGradeId(), grade.getGradeValue(), grade.getStudent(), grade.getTeacher());
     }
     public List<GradeCheckByStudentResponseDto> getGradesByStudent(Long id){
         List<Grade> gradesForStudent = gradeRepository.findAllByStudent(studentService.getStudentById(id)

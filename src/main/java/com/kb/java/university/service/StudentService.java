@@ -5,7 +5,6 @@ import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.entity.Student;
 import com.kb.java.university.exception.ObjectNotFoundException;
 import com.kb.java.university.repository.StudentRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,19 +21,19 @@ public class StudentService {
     public StudentResponse findStudent(Long id) {
         Student studentById = getStudentById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Not found student with given id: " + id));
-        return new StudentResponse(studentById.getId(), studentById.getName(), studentById.getLastName(), studentById.getEmail(), studentById.getGrades());
+        return new StudentResponse(studentById.getStudentId(), studentById.getName(), studentById.getLastName(), studentById.getEmail(), studentById.getGrades());
     }
 
     public StudentResponse findStudentByLastName(String lastName){
         Student studentByName = studentRepository.findByLastName(lastName)
                 .orElseThrow(()->new ObjectNotFoundException("Not found studnet with given last name: "+ lastName));
-        return new StudentResponse(studentByName.getId(), studentByName.getName(), studentByName.getLastName(), studentByName.getEmail(), studentByName.getGrades());
+        return new StudentResponse(studentByName.getStudentId(), studentByName.getName(), studentByName.getLastName(), studentByName.getEmail(), studentByName.getGrades());
     }
 
     public List<StudentResponse> findAllStudents() {
         List<Student> allStudents = studentRepository.findAll();
         return allStudents.stream()
-                .map(student -> new StudentResponse(student.getId(), student.getName(), student.getLastName(), student.getEmail(), student.getGrades()))
+                .map(student -> new StudentResponse(student.getStudentId(), student.getName(), student.getLastName(), student.getEmail(), student.getGrades()))
                 .collect(Collectors.toList());
     }
 
@@ -45,16 +44,15 @@ public class StudentService {
                 .email(studentRequest.getEmail())
                 .build();
         studentRepository.save(student);
-        return new StudentResponse(student.getId(), student.getName(), student.getLastName(), student.getEmail());
+        return new StudentResponse(student.getStudentId(), student.getName(), student.getLastName(), student.getEmail());
     }
 
-    public void editStudent(Long id, Student student) {
+    public void editStudent(Long id, StudentRequest student) {
         Student studentToEdit = studentRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Not found student with given id: " + id));
         studentToEdit.setEmail(student.getEmail());
         studentToEdit.setName(student.getName());
         studentToEdit.setLastName(student.getLastName());
-        studentToEdit.setGrades(student.getGrades());
         studentRepository.save(studentToEdit);
     }
 

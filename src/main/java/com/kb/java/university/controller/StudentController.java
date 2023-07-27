@@ -42,7 +42,7 @@ public class StudentController {
 
     @PutMapping("/v1/student/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void editStudent(@PathVariable Long id, @RequestBody Student student){
+    public void editStudent(@PathVariable Long id, @RequestBody StudentRequest student){
         studentService.editStudent(id, student);
     }
 }

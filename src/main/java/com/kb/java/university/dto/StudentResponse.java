@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentResponse {
-    private Long id;
+    private Long studentId;
     private String name;
     private String lastName;
     private String email;
@@ -25,8 +25,8 @@ public class StudentResponse {
         this.email = email;
     }
 
-    public StudentResponse(Long id, String name, String lastName, String email) {
-        this.id = id;
+    public StudentResponse(Long studentId, String name, String lastName, String email) {
+        this.studentId = studentId;
         this.name = name;
         this.lastName = lastName;
         this.email = email;

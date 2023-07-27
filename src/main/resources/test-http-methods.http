@@ -11,23 +11,23 @@ Content-Type: application/json
 
 ###
 
-GET localhost:8080/api/v1/student/2
+GET localhost:8080/api/v1/student/1
 
 ###
 
-DELETE localhost:8080/api/v1/student/1
+DELETE localhost:8080/api/v1/student/3
 
 ###
-PUT localhost:8080/api/v1/student/2
+PUT localhost:8080/api/v1/student/1
 Content-Type: application/json
 
-{   "name": "Jan",
+{   "name": "Janek",
   "lastName": "Kowalski",
   "email": "kowal@mail.com"
 }
 ###
 
-POST localhost:8080/api/v1/grade?teacherId=1&studentId=2
+POST localhost:8080/api/v1/grade?teacherId=1&studentId=1
 Content-Type: application/json
 
 {

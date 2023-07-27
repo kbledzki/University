@@ -16,7 +16,7 @@ public class Grade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long gradeId;
 
     private double gradeValue;
 

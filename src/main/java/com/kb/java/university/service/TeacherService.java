@@ -1,10 +1,7 @@
 package com.kb.java.university.service;
 
-import com.kb.java.university.dto.StudentRequest;
-import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.dto.TeacherRequest;
 import com.kb.java.university.dto.TeacherResponse;
-import com.kb.java.university.entity.Student;
 import com.kb.java.university.entity.Teacher;
 import com.kb.java.university.exception.ObjectNotFoundException;
 import com.kb.java.university.repository.TeacherRepository;
@@ -25,12 +22,12 @@ public class TeacherService {
     public TeacherResponse findTeacher(Long id) {
         Teacher teacherById = getTeacherById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Not found teacher with given id: " + id));
-        return new TeacherResponse(teacherById.getId(), teacherById.getName(), teacherById.getLastName(), teacherById.getEmail(), teacherById.getGrades());
+        return new TeacherResponse(teacherById.getTeacherId(), teacherById.getName(), teacherById.getLastName(), teacherById.getEmail(), teacherById.getGrades());
     }
     public List<TeacherResponse> findAllTeachers() {
         List<Teacher> allTeachers = teacherRepository.findAll();
         return allTeachers.stream()
-                .map(teacher -> new TeacherResponse(teacher.getId(), teacher.getName(), teacher.getLastName(), teacher.getEmail(), teacher.getGrades()))
+                .map(teacher -> new TeacherResponse(teacher.getTeacherId(), teacher.getName(), teacher.getLastName(), teacher.getEmail(), teacher.getGrades()))
                 .collect(Collectors.toList());
     }
     public TeacherResponse createTeacher(TeacherRequest teacherRequest) {
@@ -40,7 +37,7 @@ public class TeacherService {
                 .email(teacherRequest.getEmail())
                 .build();
         teacherRepository.save(teacher);
-        return new TeacherResponse(teacher.getId(), teacher.getName(), teacher.getLastName(), teacher.getEmail());
+        return new TeacherResponse(teacher.getTeacherId(), teacher.getName(), teacher.getLastName(), teacher.getEmail());
     }
     public void removeTeacher(Long id) {
         getTeacherById(id).
