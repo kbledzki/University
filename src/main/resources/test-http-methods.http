@@ -1,6 +1,6 @@
 GET localhost:8080/api/v1/students
 ###
-POST localhost:8080/api/v1/students
+POST localhost:8080/api/v1/student
 Content-Type: application/json
 
 {
@@ -27,11 +27,21 @@ Content-Type: application/json
 }
 ###
 
-POST localhost:8080/api/v1/grade/2
+POST localhost:8080/api/v1/grade/2/2
 Content-Type: application/json
 
 {
-"gradeValue": 3
+"gradeValue": 4
+}
+
+###
+POST localhost:8080/api/v1/teacher
+Content-Type: application/json
+
+{
+  "name": "Fran",
+  "lastName": "Kowalski",
+  "email": "kowal@mail.com"
 }
 
 ###

@@ -17,10 +17,11 @@ public class GradeController {
         this.gradeService = gradeService;
     }
 
-    @PostMapping("/v1/grade/{studentId}")
+    @PostMapping("/v1/grade/{teacherId}/{studentId}")
     public ResponseEntity<GradeResponse> createGrade (@RequestBody GradeRequest grade,
-                                                      @PathVariable Long studentId)
+                                                      @PathVariable Long studentId,
+                                                      @PathVariable Long teacherId)
                                                      {
-        return new ResponseEntity<>(gradeService.createGrade(grade,studentId), HttpStatus.CREATED);
+        return new ResponseEntity<>(gradeService.createGrade(grade,studentId,teacherId), HttpStatus.CREATED);
     }
 }

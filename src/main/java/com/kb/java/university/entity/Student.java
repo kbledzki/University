@@ -1,5 +1,6 @@
 package com.kb.java.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,6 +25,7 @@ public class Student {
     private String email;
     @OneToMany (mappedBy = "student", cascade = CascadeType.ALL)
     @JsonManagedReference
+//    @JsonIgnore
     private List<Grade> grades = new ArrayList<>();
 }
 

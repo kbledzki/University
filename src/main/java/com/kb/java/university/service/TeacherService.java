@@ -42,6 +42,10 @@ public class TeacherService {
         teacherRepository.save(teacher);
         return new TeacherResponse(teacher.getId(), teacher.getName(), teacher.getLastName(), teacher.getEmail());
     }
+    public void removeTeacher(Long id) {
+        getTeacherById(id).
+                ifPresent(teacher -> teacherRepository.deleteById(id));
+    }
     public Optional<Teacher> getTeacherById(Long id) {
         return teacherRepository.findById(id);
     }
