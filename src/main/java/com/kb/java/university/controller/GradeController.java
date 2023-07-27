@@ -16,9 +16,19 @@ public class GradeController {
         this.gradeService = gradeService;
     }
 
-    @GetMapping("/v1/grade/student/{id}")
-    public ResponseEntity<List<GradeCheckByStudentResponseDto>> getGradesForStudent(@PathVariable Long id) {
+    @GetMapping("/v1/grade/student")
+    public ResponseEntity<List<GradeCheckByStudentResponseDto>> getGradesForStudent(@RequestParam Long id) {
         return new ResponseEntity<>(gradeService.getGradesByStudent(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/v1/grades")
+    public ResponseEntity<List<GradeResponse>> getGrades() {
+        return new ResponseEntity<>(gradeService.findAllGrades(), HttpStatus.OK);
+    }
+
+    @GetMapping("/v1/grade/{id}")
+    public ResponseEntity<GradeResponse> getGrade (@PathVariable Long id){
+        return new ResponseEntity<>(gradeService.findGrade(id), HttpStatus.OK);
     }
 
     @PostMapping("/v1/grade")
@@ -27,5 +37,11 @@ public class GradeController {
                                                       @RequestParam Long teacherId)
                                                      {
         return new ResponseEntity<>(gradeService.createGrade(grade,studentId,teacherId), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/v1/grade/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeGrade(@PathVariable Long id){
+        gradeService.removeGrade(id);
     }
 }

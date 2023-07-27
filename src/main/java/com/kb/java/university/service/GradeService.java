@@ -3,7 +3,9 @@ package com.kb.java.university.service;
 import com.kb.java.university.dto.GradeCheckByStudentResponseDto;
 import com.kb.java.university.dto.GradeRequest;
 import com.kb.java.university.dto.GradeResponse;
+import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.entity.Grade;
+import com.kb.java.university.entity.Student;
 import com.kb.java.university.exception.ObjectNotFoundException;
 import com.kb.java.university.repository.GradeRepository;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,12 @@ public class GradeService {
                 .orElseThrow(() -> new ObjectNotFoundException("Not found grade with given id: " + id));
         return new GradeResponse(gradeById.getGradeId(), gradeById.getGradeValue(), gradeById.getStudent(), gradeById.getTeacher());
     }
+    public List<GradeResponse> findAllGrades() {
+        List<Grade> allGrades = gradeRepository.findAll();
+        return allGrades.stream()
+                .map(grade -> new GradeResponse(grade.getGradeId(), grade.getGradeValue(), grade.getStudent(), grade.getTeacher()))
+                .collect(Collectors.toList());
+    }
 
     public GradeResponse createGrade(GradeRequest gradeRequest, Long studentId, Long teacherId){
         Grade grade = Grade.builder()
@@ -45,6 +53,11 @@ public class GradeService {
         return gradesForStudent.stream()
                 .map(grade -> new GradeCheckByStudentResponseDto(grade.getGradeValue(),grade.getTeacher()))
                 .collect(Collectors.toList());
+    }
+
+    public void removeGrade(Long id) {
+        getGradeById(id).
+                ifPresent(grade -> gradeRepository.deleteById(id));
     }
 
     private Optional<Grade> getGradeById(Long id) {
