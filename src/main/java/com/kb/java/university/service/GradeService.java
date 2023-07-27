@@ -17,7 +17,6 @@ public class GradeService {
     private final GradeRepository gradeRepository;
     private final StudentService studentService;
 
-
     public GradeService(GradeRepository gradeRepository, StudentService studentService) {
         this.gradeRepository = gradeRepository;
         this.studentService = studentService;
@@ -25,7 +24,7 @@ public class GradeService {
 
     public GradeResponse findGrade(Long id) {
         Grade gradeById = getGradeById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Not found student with given id: " + id));
+                .orElseThrow(() -> new ObjectNotFoundException("Not found grade with given id: " + id));
         return new GradeResponse(gradeById.getId(), gradeById.getGradeValue(), gradeById.getStudent());
     }
 
@@ -36,11 +35,6 @@ public class GradeService {
                 .build();
         gradeRepository.save(grade);
         return  new GradeResponse(grade.getId(), grade.getGradeValue(), grade.getStudent());
-    }
-
-    public void setGradeToStudent(GradeResponse grade, String lastName){
-        GradeResponse gradeToSet = findGrade(grade.getId());
-        studentService.findStudentByLastName(lastName);
     }
 
     private Optional<Grade> getGradeById(Long id) {

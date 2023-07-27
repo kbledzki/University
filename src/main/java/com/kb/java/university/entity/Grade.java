@@ -25,4 +25,8 @@ public class Grade {
     @JsonBackReference
     private Student student;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    @JsonBackReference
+    private Teacher teacher;
 }
