@@ -65,7 +65,7 @@ public class StudentService {
                 ifPresent(student -> studentRepository.deleteById(id));
     }
 
-    private Optional<Student> getStudentById(Long id) {
+    public Optional<Student> getStudentById(Long id) {
         return studentRepository.findById(id);
     }
 }

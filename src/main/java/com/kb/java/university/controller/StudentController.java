@@ -18,10 +18,12 @@ public class StudentController {
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
+
     @GetMapping("/v1/students")
     public ResponseEntity<List<StudentResponse>> getStudents() {
         return new ResponseEntity<>(studentService.findAllStudents(), HttpStatus.OK);
     }
+
     @GetMapping("/v1/student/{id}")
     public ResponseEntity<StudentResponse> getStudent (@PathVariable Long id){
         return new ResponseEntity<>(studentService.findStudent(id), HttpStatus.OK);
@@ -31,11 +33,13 @@ public class StudentController {
     public ResponseEntity<StudentResponse> createStudent(@RequestBody StudentRequest student){
         return new ResponseEntity<>(studentService.createStudent(student), HttpStatus.CREATED);
     }
+
     @DeleteMapping("/v1/student/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeStudent(@PathVariable Long id){
         studentService.removeStudent(id);
     }
+
     @PutMapping("/v1/student/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void editStudent(@PathVariable Long id, @RequestBody Student student){

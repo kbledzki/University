@@ -2,6 +2,7 @@ package com.kb.java.university.service;
 
 import com.kb.java.university.dto.GradeRequest;
 import com.kb.java.university.dto.GradeResponse;
+import com.kb.java.university.dto.StudentRequest;
 import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.entity.Grade;
 import com.kb.java.university.entity.Student;
@@ -16,6 +17,7 @@ public class GradeService {
     private final GradeRepository gradeRepository;
     private final StudentService studentService;
 
+
     public GradeService(GradeRepository gradeRepository, StudentService studentService) {
         this.gradeRepository = gradeRepository;
         this.studentService = studentService;
@@ -27,17 +29,17 @@ public class GradeService {
         return new GradeResponse(gradeById.getId(), gradeById.getGradeValue(), gradeById.getStudent());
     }
 
-    public GradeResponse createGrade(GradeRequest gradeRequest){
+    public GradeResponse createGrade(GradeRequest gradeRequest, Long id){
         Grade grade = Grade.builder()
                 .gradeValue(gradeRequest.getGradeValue())
-                .student(gradeRequest.getStudent())
+                .student(studentService.getStudentById(id).orElseThrow(()-> new ObjectNotFoundException("Not found student with given id: " + id)))
                 .build();
         gradeRepository.save(grade);
         return  new GradeResponse(grade.getId(), grade.getGradeValue(), grade.getStudent());
     }
 
-    public void setGradeToStudent(Long id, String lastName){
-        GradeResponse gradeToSet = findGrade(id);
+    public void setGradeToStudent(GradeResponse grade, String lastName){
+        GradeResponse gradeToSet = findGrade(grade.getId());
         studentService.findStudentByLastName(lastName);
     }
 
