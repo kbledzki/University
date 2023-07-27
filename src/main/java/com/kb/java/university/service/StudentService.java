@@ -14,11 +14,9 @@ import java.util.stream.Collectors;
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
-    private final ModelMapper modelMapper;
 
-    public StudentService(StudentRepository studentRepository, ModelMapper modelMapper) {
+    public StudentService(StudentRepository studentRepository  ) {
         this.studentRepository = studentRepository;
-        this.modelMapper = modelMapper;
     }
 
     public StudentResponse findStudent(Long id) {

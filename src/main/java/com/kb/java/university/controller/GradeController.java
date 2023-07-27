@@ -16,16 +16,15 @@ public class GradeController {
         this.gradeService = gradeService;
     }
 
-
     @GetMapping("/v1/grade/student/{id}")
     public ResponseEntity<List<GradeCheckByStudentResponseDto>> getGradesForStudent(@PathVariable Long id) {
         return new ResponseEntity<>(gradeService.getGradesByStudent(id), HttpStatus.OK);
     }
 
-    @PostMapping("/v1/grade/{teacherId}/{studentId}")
+    @PostMapping("/v1/grade")
     public ResponseEntity<GradeResponse> createGrade (@RequestBody GradeRequest grade,
-                                                      @PathVariable Long studentId,
-                                                      @PathVariable Long teacherId)
+                                                      @RequestParam Long studentId,
+                                                      @RequestParam Long teacherId)
                                                      {
         return new ResponseEntity<>(gradeService.createGrade(grade,studentId,teacherId), HttpStatus.CREATED);
     }

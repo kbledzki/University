@@ -44,7 +44,7 @@ public class GradeService {
         List<Grade> gradesForStudent = gradeRepository.findAllByStudent(studentService.getStudentById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Not found student with given id: " + id)));
         return gradesForStudent.stream()
-                .map(g -> new GradeCheckByStudentResponseDto(g.getGradeValue(),g.getTeacher()))
+                .map(grade -> new GradeCheckByStudentResponseDto(grade.getGradeValue(),grade.getTeacher()))
                 .collect(Collectors.toList());
     }
 

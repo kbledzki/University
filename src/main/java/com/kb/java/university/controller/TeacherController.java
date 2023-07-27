@@ -1,6 +1,5 @@
 package com.kb.java.university.controller;
 
-import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.dto.TeacherRequest;
 import com.kb.java.university.dto.TeacherResponse;
 import com.kb.java.university.service.TeacherService;
