@@ -20,6 +20,10 @@ public class GradeController {
     public ResponseEntity<List<GradeCheckByStudentResponseDto>> getGradesForStudent(@RequestParam Long id) {
         return new ResponseEntity<>(gradeService.getGradesByStudent(id), HttpStatus.OK);
     }
+    @GetMapping("/v1/grade/teacher")
+    public ResponseEntity<List<GradeCheckByTeacherResponseDto>> getGradesForTeacher(@RequestParam Long id) {
+        return new ResponseEntity<>(gradeService.getGradesByTeacher(id), HttpStatus.OK);
+    }
 
     @GetMapping("/v1/grades")
     public ResponseEntity<List<GradeResponse>> getGrades() {

@@ -1,9 +1,6 @@
 package com.kb.java.university.service;
 
-import com.kb.java.university.dto.GradeCheckByStudentResponseDto;
-import com.kb.java.university.dto.GradeRequest;
-import com.kb.java.university.dto.GradeResponse;
-import com.kb.java.university.dto.StudentResponse;
+import com.kb.java.university.dto.*;
 import com.kb.java.university.entity.Grade;
 import com.kb.java.university.entity.Student;
 import com.kb.java.university.exception.ObjectNotFoundException;
@@ -52,6 +49,13 @@ public class GradeService {
                 .orElseThrow(() -> new ObjectNotFoundException("Not found student with given id: " + id)));
         return gradesForStudent.stream()
                 .map(grade -> new GradeCheckByStudentResponseDto(grade.getGradeValue(),grade.getTeacher()))
+                .collect(Collectors.toList());
+    }
+    public List<GradeCheckByTeacherResponseDto> getGradesByTeacher(Long id){
+        List<Grade> gradesForTeacher = gradeRepository.findAllByTeacher(teacherService.getTeacherById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Not found teacher with given id: " + id)));
+        return gradesForTeacher.stream()
+                .map(grade -> new GradeCheckByTeacherResponseDto(grade.getGradeValue(),grade.getStudent()))
                 .collect(Collectors.toList());
     }
 
