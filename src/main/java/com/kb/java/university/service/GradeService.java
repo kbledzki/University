@@ -2,7 +2,6 @@ package com.kb.java.university.service;
 
 import com.kb.java.university.dto.*;
 import com.kb.java.university.entity.Grade;
-import com.kb.java.university.entity.Student;
 import com.kb.java.university.exception.ObjectNotFoundException;
 import com.kb.java.university.repository.GradeRepository;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,7 @@ public class GradeService {
                 .orElseThrow(() -> new ObjectNotFoundException("Not found grade with given id: " + id));
         return new GradeResponse(gradeById.getGradeId(), gradeById.getGradeValue(), gradeById.getStudent(), gradeById.getTeacher());
     }
+
     public List<GradeResponse> findAllGrades() {
         List<Grade> allGrades = gradeRepository.findAll();
         return allGrades.stream()
@@ -44,6 +44,7 @@ public class GradeService {
         gradeRepository.save(grade);
         return  new GradeResponse(grade.getGradeId(), grade.getGradeValue(), grade.getStudent(), grade.getTeacher());
     }
+
     public List<GradeCheckByStudentResponseDto> getGradesByStudent(Long id){
         List<Grade> gradesForStudent = gradeRepository.findAllByStudent(studentService.getStudentById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Not found student with given id: " + id)));
@@ -51,6 +52,7 @@ public class GradeService {
                 .map(grade -> new GradeCheckByStudentResponseDto(grade.getGradeValue(),grade.getTeacher()))
                 .collect(Collectors.toList());
     }
+
     public List<GradeCheckByTeacherResponseDto> getGradesByTeacher(Long id){
         List<Grade> gradesForTeacher = gradeRepository.findAllByTeacher(teacherService.getTeacherById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Not found teacher with given id: " + id)));
