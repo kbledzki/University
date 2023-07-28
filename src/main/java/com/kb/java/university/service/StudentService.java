@@ -60,6 +60,9 @@ public class StudentService {
         getStudentById(id).
                 ifPresent(student -> studentRepository.deleteById(id));
     }
+    public void removeAll(){
+        studentRepository.deleteAll();
+    }
 
     public Optional<Student> getStudentById(Long id) {
         return studentRepository.findById(id);

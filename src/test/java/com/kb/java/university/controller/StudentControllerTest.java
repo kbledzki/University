@@ -4,8 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.entity.Student;
 import com.kb.java.university.service.StudentService;
+import jakarta.transaction.Transactional;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -37,6 +40,7 @@ class StudentControllerTest {
     @Test
     @Sql({"/schema.sql"})
     @Sql({"/data.sql"})
+    @Transactional
     void shouldReturnAllStudents() throws Exception {
         //given
         //when
@@ -52,12 +56,13 @@ class StudentControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[3].name", Matchers.is("Nametest4")))
                 .andReturn();
         //then
-        Assertions.assertEquals(studentService.findAllStudents().size(), 4);
+        assertThat(studentService.findAllStudents()).hasSize(4);
     }
 
     @Test
     @Sql({"/schema.sql"})
     @Sql({"/data.sql"})
+    @Transactional
     void shouldReturnStudentByGivenId() throws Exception {
         //given
         Student student = Student.builder().studentId(134L).name("Nametest1").lastName("Lastnametest1").email("email1@test.com").build();
@@ -77,6 +82,7 @@ class StudentControllerTest {
     @Test
     @Sql({"/schema.sql"})
     @Sql({"/data.sql"})
+    @Transactional
     void shouldAddStudent() throws Exception {
         //given
         Student student = Student.builder().studentId(123L).name("name").lastName("lastName").email("name@email.com").build();
@@ -94,15 +100,24 @@ class StudentControllerTest {
         assertThat(studentsBeforeAdd).hasSize(4);
         assertThat(studentsAfterAdd).hasSize(5);
         assertThat(studentsAfterAdd.get(4).getName()).isEqualTo(student.getName());
-
     }
 
     @Test
     @Sql({"/schema.sql"})
     @Sql({"/data.sql"})
+    @Transactional
     void shouldRemoveStudent() throws Exception {
-
-
+        //given
+        List<StudentResponse> studentsBeforeDelete = new ArrayList<>(studentService.findAllStudents());
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/student/134"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isNoContent())
+                .andReturn();
+        //then
+        List<StudentResponse> studentsAfterDelete = new ArrayList<>(studentService.findAllStudents());
+        assertThat(studentsBeforeDelete).hasSize(4);
+        assertThat(studentsAfterDelete).hasSize(3);
     }
 
 }
