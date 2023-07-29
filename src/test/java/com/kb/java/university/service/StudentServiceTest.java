@@ -1,26 +1,19 @@
 package com.kb.java.university.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kb.java.university.data.InitData;
 import com.kb.java.university.dto.StudentRequest;
 import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.entity.Student;
-import com.kb.java.university.exception.ObjectNotFoundException;
 import com.kb.java.university.repository.StudentRepository;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
-import org.springframework.test.context.jdbc.Sql;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -79,7 +72,4 @@ class StudentServiceTest {
         //then
         verify(studentRepositoryMock).deleteById(id);
     }
-
-
-
-}
+   }
