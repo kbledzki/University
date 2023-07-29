@@ -1,0 +1,51 @@
+GET localhost:8080/api/v1/students
+###
+POST localhost:8080/api/v1/student
+Content-Type: application/json
+
+{
+  "name": "Jan",
+  "lastName": "Kowalski",
+  "email": "kowal@mail.com"
+}
+
+###
+
+GET localhost:8080/api/v1/student/1
+
+###
+
+DELETE localhost:8080/api/v1/student/3
+
+###
+PUT localhost:8080/api/v1/student/1
+Content-Type: application/json
+
+{   "name": "Janek",
+  "lastName": "Kowalski",
+  "email": "kowal@mail.com"
+}
+###
+
+POST localhost:8080/api/v1/grade?teacherId=1&studentId=1
+Content-Type: application/json
+
+{
+"gradeValue": 4
+}
+
+###
+POST localhost:8080/api/v1/teacher
+Content-Type: application/json
+
+{
+  "name": "Fran",
+  "lastName": "Kowalski",
+  "email": "kowal@mail.com"
+}
+
+###
+
+GET localhost:8080/api/v1/grade/student?id=2
+
+###
