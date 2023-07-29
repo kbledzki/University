@@ -2,9 +2,7 @@ package com.kb.java.university.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kb.java.university.dto.GradeResponse;
-import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.entity.Grade;
-import com.kb.java.university.entity.Student;
 import com.kb.java.university.service.GradeService;
 import jakarta.transaction.Transactional;
 import org.hamcrest.Matchers;
