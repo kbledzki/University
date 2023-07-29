@@ -2,7 +2,6 @@ package com.kb.java.university.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kb.java.university.service.GradeService;
-import com.kb.java.university.service.StudentService;
 import jakarta.transaction.Transactional;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
