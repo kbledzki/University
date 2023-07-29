@@ -131,5 +131,21 @@ public class GradeControllerTest {
         assertThat(gradesAfterAdd.get(4).getGradeValue()).isEqualTo(4.0);
     }
 
-
+    @Test
+    @Sql({"/schema.sql"})
+    @Sql({"/data.sql"})
+    @Transactional
+    void shouldRemoveGradeByGivenId() throws Exception {
+        //given
+        List<GradeResponse> gradeBeforeDelete = new ArrayList<>(gradeService.findAllGrades());
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/grade/156"))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isNoContent())
+                .andReturn();
+        //then
+        List<GradeResponse> gradeAfterDelete = new ArrayList<>(gradeService.findAllGrades());
+        assertThat(gradeBeforeDelete).hasSize(8);
+        assertThat(gradeAfterDelete).hasSize(7);
+    }
 }
