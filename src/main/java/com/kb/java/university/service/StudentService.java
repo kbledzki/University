@@ -57,13 +57,10 @@ public class StudentService {
     }
 
     public void removeStudent(Long id) {
-        getStudentById(id).
-                ifPresent(student -> studentRepository.deleteById(id));
+        getStudentById(id)
+                .ifPresentOrElse(student -> studentRepository.deleteById(id),
+                        () -> new ObjectNotFoundException("Not found student with given id: " + id));
     }
-    public void removeAll(){
-        studentRepository.deleteAll();
-    }
-
     public Optional<Student> getStudentById(Long id) {
         return studentRepository.findById(id);
     }
