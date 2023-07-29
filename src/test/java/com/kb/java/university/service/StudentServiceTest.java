@@ -33,22 +33,6 @@ class StudentServiceTest {
     @InjectMocks
     private StudentService studentService;
 
-//@Test
-//void shouldCreateStudent() {
-//    //given
-//    Student student = InitData.studentsList().get(0);
-//    StudentRequest studentRe = new StudentRequest();
-//    StudentResponse studentResponse = new StudentResponse();
-//
-//    when(studentRepositoryMock.save(student)).thenReturn(studentResponse);
-//    //when
-//  studentService.createStudent( new ModelMapper().map(student,StudentRequest.class));
-    //then
-//    verify(studentRepositoryMock, times(1)).save(student);
-//    assertThat(studentService.createStudent(studentRe)).isEqualTo("Success");
-
-//    assertEquals(student, savedStudent);
-//}
     @Test
     void shouldFindStudentByGivenId() {
         //given
@@ -60,6 +44,7 @@ class StudentServiceTest {
         verify(studentRepositoryMock, times(1)).findById(1L);
         assertEquals("Ntest1", studentById.getName());
     }
+
     @Test
     void shouldFindStudentByGivenLastName() {
         //given
@@ -82,18 +67,19 @@ class StudentServiceTest {
         //then
         assertThat(allStudents).hasSize(4);
     }
-//    @Test
-//    void shouldRemoveAStudentByGivenId() {
-//        //given
-//        List<Student> studentToTest = InitData.studentsList();
-//        studentToTest.remove(3);
-//        when(studentRepositoryMock.deleteById(anyLong())).thenReturn(studentToTest);
-//        //when
-//        studentService.removeStudent(1L);
-//        List<StudentResponse> allStudentAfterRemove = studentService.findAllStudents();
-//        //then
-//        assertThat(allStudentAfterRemove).hasSize(3);
-//    }
+
+    @Test
+    void shouldRemoveAStudentByGivenId() {
+        //given
+        Student student = new Student();
+        Long id = 1L;
+        when(studentRepositoryMock.findById(id)).thenReturn(Optional.of(student));
+        //when
+        studentService.removeStudent(id);
+        //then
+        verify(studentRepositoryMock).deleteById(id);
+    }
+
 
 
 }

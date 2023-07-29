@@ -26,7 +26,7 @@ public class StudentService {
 
     public StudentResponse findStudentByLastName(String lastName){
         Student studentByName = studentRepository.findByLastName(lastName)
-                .orElseThrow(()->new ObjectNotFoundException("Not found studnet with given last name: "+ lastName));
+                .orElseThrow(()->new ObjectNotFoundException("Not found student with given last name: "+ lastName));
         return new StudentResponse(studentByName.getStudentId(), studentByName.getName(), studentByName.getLastName(), studentByName.getEmail(), studentByName.getGrades());
     }
 
