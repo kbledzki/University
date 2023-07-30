@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class StudentService {
     private final StudentRepository studentRepository;
 
-    public StudentService(StudentRepository studentRepository  ) {
+    public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
@@ -24,9 +24,9 @@ public class StudentService {
         return new StudentResponse(studentById.getStudentId(), studentById.getName(), studentById.getLastName(), studentById.getEmail(), studentById.getGrades());
     }
 
-    public StudentResponse findStudentByLastName(String lastName){
+    public StudentResponse findStudentByLastName(String lastName) {
         Student studentByName = studentRepository.findByLastName(lastName)
-                .orElseThrow(()->new ObjectNotFoundException("Not found student with given last name: "+ lastName));
+                .orElseThrow(() -> new ObjectNotFoundException("Not found student with given last name: " + lastName));
         return new StudentResponse(studentByName.getStudentId(), studentByName.getName(), studentByName.getLastName(), studentByName.getEmail(), studentByName.getGrades());
     }
 
@@ -61,6 +61,7 @@ public class StudentService {
                 .ifPresentOrElse(student -> studentRepository.deleteById(id),
                         () -> new ObjectNotFoundException("Not found student with given id: " + id));
     }
+
     public Optional<Student> getStudentById(Long id) {
         return studentRepository.findById(id);
     }

@@ -11,7 +11,7 @@ Content-Type: application/json
 
 ###
 
-GET localhost:8080/api/v1/student/3
+GET localhost:8080/api/v1/student/1
 
 ###
 
