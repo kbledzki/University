@@ -11,6 +11,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = Grade.TABLE_NAME)

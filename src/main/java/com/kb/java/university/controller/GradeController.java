@@ -2,6 +2,7 @@ package com.kb.java.university.controller;
 
 import com.kb.java.university.dto.*;
 import com.kb.java.university.service.GradeService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +11,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api")
+@Tag(name = "Operations for grades")
 public class GradeController {
     private final GradeService gradeService;
+
     public GradeController(GradeService gradeService) {
         this.gradeService = gradeService;
     }
@@ -32,21 +35,20 @@ public class GradeController {
     }
 
     @GetMapping("/v1/grade/{id}")
-    public ResponseEntity<GradeResponse> getGrade (@PathVariable Long id){
+    public ResponseEntity<GradeResponse> getGrade(@PathVariable Long id) {
         return new ResponseEntity<>(gradeService.findGrade(id), HttpStatus.OK);
     }
 
     @PostMapping("/v1/grade")
-    public ResponseEntity<GradeResponse> createGrade (@RequestBody GradeRequest grade,
-                                                      @RequestParam Long studentId,
-                                                      @RequestParam Long teacherId)
-                                                     {
-        return new ResponseEntity<>(gradeService.createGrade(grade,studentId,teacherId), HttpStatus.CREATED);
+    public ResponseEntity<GradeResponse> createGrade(@RequestBody GradeRequest grade,
+                                                     @RequestParam Long studentId,
+                                                     @RequestParam Long teacherId) {
+        return new ResponseEntity<>(gradeService.createGrade(grade, studentId, teacherId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/v1/grade/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeGrade(@PathVariable Long id){
+    public void removeGrade(@PathVariable Long id) {
         gradeService.removeGrade(id);
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = Teacher.TABLE_NAME)

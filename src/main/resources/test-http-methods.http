@@ -15,7 +15,7 @@ GET localhost:8080/api/v1/student/1
 
 ###
 
-DELETE localhost:8080/api/v1/student/3
+DELETE localhost:8080/api/v1/student/2
 
 ###
 PUT localhost:8080/api/v1/student/1

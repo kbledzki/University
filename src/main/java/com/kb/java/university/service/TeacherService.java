@@ -1,6 +1,7 @@
 package com.kb.java.university.service;
 
 import com.kb.java.university.dto.StudentRequest;
+import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.dto.TeacherRequest;
 import com.kb.java.university.dto.TeacherResponse;
 import com.kb.java.university.entity.Student;
@@ -32,6 +33,12 @@ public class TeacherService {
                 .map(teacher -> new TeacherResponse(teacher.getTeacherId(), teacher.getName(), teacher.getLastName(), teacher.getEmail(), teacher.getGrades()))
                 .collect(Collectors.toList());
     }
+    public TeacherResponse findTeacherByLastName(String lastName){
+        Teacher teacherByName = teacherRepository.findByLastName(lastName)
+                .orElseThrow(()->new ObjectNotFoundException("Not found teacher with given last name: "+ lastName));
+        return new TeacherResponse(teacherByName.getTeacherId(), teacherByName.getName(), teacherByName.getLastName(), teacherByName.getEmail(), teacherByName.getGrades());
+    }
+
     public TeacherResponse createTeacher(TeacherRequest teacherRequest) {
         Teacher teacher = Teacher.builder()
                 .name(teacherRequest.getName())
