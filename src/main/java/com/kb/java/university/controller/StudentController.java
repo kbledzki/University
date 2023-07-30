@@ -2,7 +2,6 @@ package com.kb.java.university.controller;
 
 import com.kb.java.university.dto.StudentRequest;
 import com.kb.java.university.dto.StudentResponse;
-import com.kb.java.university.entity.Student;
 import com.kb.java.university.service.StudentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
