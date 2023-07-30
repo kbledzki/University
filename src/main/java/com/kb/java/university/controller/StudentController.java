@@ -4,6 +4,7 @@ import com.kb.java.university.dto.StudentRequest;
 import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.entity.Student;
 import com.kb.java.university.service.StudentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api")
+@Tag(name = "Operations for Students")
 public class StudentController {
     private final StudentService studentService;
 

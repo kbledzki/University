@@ -2,6 +2,7 @@ package com.kb.java.university.controller;
 
 import com.kb.java.university.dto.*;
 import com.kb.java.university.service.GradeService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api")
+@Tag(name = "Operations for grades")
 public class GradeController {
     private final GradeService gradeService;
 
