@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS  student (
                            email varchar(255) DEFAULT NULL,
                            last_name varchar(30) NOT NULL,
                            name varchar(30) NOT NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 CREATE TABLE IF NOT EXISTS  teacher (
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS  teacher (
                            email varchar(255) DEFAULT NULL,
                            last_name varchar(30) NOT NULL,
                            name varchar(30) NOT NULL
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 CREATE TABLE IF NOT EXISTS grade (
@@ -22,4 +22,4 @@ CREATE TABLE IF NOT EXISTS grade (
                          teacher_id bigint DEFAULT NULL,
                           FOREIGN KEY (student_id) REFERENCES student (student_id),
                           FOREIGN KEY (teacher_id) REFERENCES teacher (teacher_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
