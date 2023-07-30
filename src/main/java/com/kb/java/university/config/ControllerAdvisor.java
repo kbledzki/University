@@ -14,12 +14,12 @@ import java.util.Map;
 @ControllerAdvice
 public class ControllerAdvisor {
     @ExceptionHandler({ObjectNotFoundException.class})
-    protected ResponseEntity<Object> handleObjectNotFoundException(ObjectNotFoundException exception, WebRequest request){
+    protected ResponseEntity<Object> handleObjectNotFoundException(ObjectNotFoundException exception, WebRequest request) {
         Map<String, Object> map = new HashMap<>();
         map.put("timestamp", LocalDateTime.now());
         map.put("status", HttpStatus.BAD_REQUEST.value());
         map.put("message", exception.getMessage());
-        map.put("path", request.getDescription(false ));
+        map.put("path", request.getDescription(false));
         return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
     }
 }

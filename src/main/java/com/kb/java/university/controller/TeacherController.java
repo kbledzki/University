@@ -3,6 +3,7 @@ package com.kb.java.university.controller;
 import com.kb.java.university.dto.TeacherRequest;
 import com.kb.java.university.dto.TeacherResponse;
 import com.kb.java.university.service.TeacherService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api")
+@Tag(name = "Operations for Teachers")
 public class TeacherController {
     private final TeacherService teacherService;
 
