@@ -8,7 +8,7 @@ RestApp for students and teachers in University
 ```bash
   git clone https://github.com/kbledzki/University.git
 ```
-### 2. Build project and perform tests
+### 2. Build project
 
 * Open terminal in project directory
 * Type:
@@ -50,7 +50,7 @@ Also can check examples of request in "test-http-methods.http" in main resources
   * DELETE /api/v1/grade/{id}
 
 ### 4. Check documentation of application
-* Check by json format:
+* Check in json format:
 
 ```bash
   http://localhost:8080/v3/api-docs
