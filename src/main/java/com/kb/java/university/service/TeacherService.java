@@ -1,10 +1,7 @@
 package com.kb.java.university.service;
 
-import com.kb.java.university.dto.StudentRequest;
-import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.dto.TeacherRequest;
 import com.kb.java.university.dto.TeacherResponse;
-import com.kb.java.university.entity.Student;
 import com.kb.java.university.entity.Teacher;
 import com.kb.java.university.exception.ObjectNotFoundException;
 import com.kb.java.university.repository.TeacherRepository;
@@ -59,7 +56,8 @@ public class TeacherService {
     }
     public void removeTeacher(Long id) {
         getTeacherById(id).
-                ifPresent(teacher -> teacherRepository.deleteById(id));
+                ifPresentOrElse(teacher -> teacherRepository.deleteById(id),
+                () -> new ObjectNotFoundException("Not found teacher with given id: " + id));
     }
     public Optional<Teacher> getTeacherById(Long id) {
         return teacherRepository.findById(id);

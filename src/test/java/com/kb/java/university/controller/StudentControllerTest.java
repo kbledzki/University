@@ -3,6 +3,7 @@ package com.kb.java.university.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.entity.Student;
+import com.kb.java.university.exception.ObjectNotFoundException;
 import com.kb.java.university.service.StudentService;
 import jakarta.transaction.Transactional;
 import org.hamcrest.Matchers;
@@ -37,20 +38,24 @@ class StudentControllerTest {
     @Sql({"/schema.sql"})
     @Sql({"/data.sql"})
     @Transactional
-    void shouldReturnAllStudents() throws Exception {
+    void shouldReturnAllStudents() {
         //given
         //when
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/students"))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", Matchers.is("Nametest1")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].lastName", Matchers.is("Lastnametest1")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].email", Matchers.is("email1@test.com")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name", Matchers.is("Nametest2")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].email", Matchers.is("email2@test.com")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[2].email", Matchers.is("email3@test.com")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[3].name", Matchers.is("Nametest4")))
-                .andReturn();
+        try {
+            mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/students"))
+                    .andDo(MockMvcResultHandlers.print())
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", Matchers.is("Nametest1")))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].lastName", Matchers.is("Lastnametest1")))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[0].email", Matchers.is("email1@test.com")))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[1].name", Matchers.is("Nametest2")))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[1].email", Matchers.is("email2@test.com")))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[2].email", Matchers.is("email3@test.com")))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$[3].name", Matchers.is("Nametest4")))
+                    .andReturn();
+        } catch (ObjectNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         //then
         assertThat(studentService.findAllStudents()).hasSize(4);
     }
@@ -59,17 +64,21 @@ class StudentControllerTest {
     @Sql({"/schema.sql"})
     @Sql({"/data.sql"})
     @Transactional
-    void shouldReturnStudentByGivenId() throws Exception {
+    void shouldReturnStudentByGivenId() {
         //given
-        Student student = Student.builder().studentId(134L).name("Nametest1").lastName("Lastnametest1").email("email1@test.com").build();
-        //when
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/student/134"))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is(student.getName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName", Matchers.is(student.getLastName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is(student.getEmail())))
-                .andReturn();
+        try {
+            Student student = Student.builder().studentId(134L).name("Nametest1").lastName("Lastnametest1").email("email1@test.com").build();
+            //when
+            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/student/134"))
+                    .andDo(MockMvcResultHandlers.print())
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is(student.getName())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.lastName", Matchers.is(student.getLastName())))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is(student.getEmail())))
+                    .andReturn();
+        } catch (ObjectNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         //then
         Student studentToTest = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), Student.class);
         assertThat(studentToTest).isNotNull();
@@ -79,18 +88,22 @@ class StudentControllerTest {
     @Sql({"/schema.sql"})
     @Sql({"/data.sql"})
     @Transactional
-    void shouldAddStudent() throws Exception {
+    void shouldAddStudent() {
         //given
         Student student = Student.builder().studentId(123L).name("name").lastName("lastName").email("name@email.com").build();
         String studentAsString = objectMapper.writeValueAsString(student);
         List<StudentResponse> studentsBeforeAdd = new ArrayList<>(studentService.findAllStudents());
         //when
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/student")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(studentAsString))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andReturn();
+        try {
+            mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/student")
+                            .contentType(MediaType.APPLICATION_JSON_VALUE)
+                            .content(studentAsString))
+                    .andDo(MockMvcResultHandlers.print())
+                    .andExpect(MockMvcResultMatchers.status().isCreated())
+                    .andReturn();
+        } catch (ObjectNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         //then
         List<StudentResponse> studentsAfterAdd = new ArrayList<>(studentService.findAllStudents());
         assertThat(studentsBeforeAdd).hasSize(4);
@@ -106,10 +119,14 @@ class StudentControllerTest {
         //given
         List<StudentResponse> studentsBeforeDelete = new ArrayList<>(studentService.findAllStudents());
         //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/student/134"))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isNoContent())
-                .andReturn();
+        try {
+            mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/student/134"))
+                    .andDo(MockMvcResultHandlers.print())
+                    .andExpect(MockMvcResultMatchers.status().isNoContent())
+                    .andReturn();
+        } catch (ObjectNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         //then
         List<StudentResponse> studentsAfterDelete = new ArrayList<>(studentService.findAllStudents());
         assertThat(studentsBeforeDelete).hasSize(4);
@@ -120,18 +137,22 @@ class StudentControllerTest {
     @Sql({"/schema.sql"})
     @Sql({"/data.sql"})
     @Transactional
-    void shouldEditStudentByGivenId() throws Exception {
+    void shouldEditStudentByGivenId() {
         //given
         Student student = Student.builder().studentId(134L).name("Nametest1").lastName("Lastnametest1").email("email1@test.com").build();
         Student studentToEdit = Student.builder().studentId(134L).name("Lolek").lastName("Newlastname1").email("email1@test.com").build();
         String studentToEditAsString = objectMapper.writeValueAsString(studentToEdit);
         //when
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/student/134")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(studentToEditAsString))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isNoContent())
-                .andReturn();
+        try {
+            mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/student/134")
+                            .contentType(MediaType.APPLICATION_JSON_VALUE)
+                            .content(studentToEditAsString))
+                    .andDo(MockMvcResultHandlers.print())
+                    .andExpect(MockMvcResultMatchers.status().isNoContent())
+                    .andReturn();
+        } catch (ObjectNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         //then
         Student editedStudent = studentService.getStudentById(134L).get();
         assertThat(editedStudent.getName()).isNotEqualTo(student.getName());

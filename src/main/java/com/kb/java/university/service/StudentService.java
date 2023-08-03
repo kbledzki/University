@@ -1,27 +1,28 @@
 package com.kb.java.university.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kb.java.university.dto.Response;
 import com.kb.java.university.dto.StudentRequest;
 import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.entity.Student;
 import com.kb.java.university.exception.ObjectNotFoundException;
 import com.kb.java.university.repository.StudentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
 
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
 
     public StudentResponse findStudent(Long id) {
         Student studentById = getStudentById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Not found student with given id: " + id));
-        return new StudentResponse(studentById.getStudentId(), studentById.getName(), studentById.getLastName(), studentById.getEmail(), studentById.getGrades());
+        return Response.studentResponse(studentById);
     }
 
     public StudentResponse findStudentByLastName(String lastName) {

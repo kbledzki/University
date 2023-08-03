@@ -1,7 +1,6 @@
 package com.kb.java.university.service;
 
 import com.kb.java.university.data.InitData;
-import com.kb.java.university.dto.StudentRequest;
 import com.kb.java.university.dto.StudentResponse;
 import com.kb.java.university.entity.Student;
 import com.kb.java.university.repository.StudentRepository;
@@ -11,12 +10,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -36,6 +35,8 @@ class StudentServiceTest {
         //then
         verify(studentRepositoryMock, times(1)).findById(1L);
         assertEquals("Ntest1", studentById.getName());
+        assertEquals("Ltest1", studentById.getLastName());
+        assertEquals("email1@test.com", studentById.getEmail());
     }
 
     @Test
@@ -72,4 +73,4 @@ class StudentServiceTest {
         //then
         verify(studentRepositoryMock).deleteById(id);
     }
-   }
+}
